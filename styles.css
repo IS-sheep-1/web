@@ -628,31 +628,32 @@ html {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 60px;
+    width: 80px;
 }
 
 .couplet.left {
-    left: 5vw;
+    left: 10px;
 }
 
 .couplet.right {
-    right: 5vw;
+    right: 10px;
 }
 
 .couplet-paper {
     background: linear-gradient(to bottom, #FFE4B5, #FFE4B5);
-    padding: 30px 15px;
+    padding: 40px 20px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    border: 2px solid #800000;
 }
 
 .couplet-paper span {
     writing-mode: vertical-rl;
     text-orientation: upright;
     color: #800000;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
-    letter-spacing: 10px;
+    letter-spacing: 15px;
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
@@ -1247,5 +1248,40 @@ img.loaded {
     .blessing-card {
         max-height: 70vh;
         overflow-y: auto;
+    }
+}
+
+/* 移动端对联样式优化 */
+@media (max-width: 768px) {
+    .couplet {
+        width: 50px;
+    }
+
+    .couplet.left {
+        left: 15px;
+    }
+
+    .couplet.right {
+        right: 15px;
+    }
+
+    .couplet-paper {
+        padding: 30px 15px;
+    }
+
+    .couplet-paper span {
+        font-size: 22px;
+        letter-spacing: 10px;
+    }
+}
+
+/* 小屏幕额外优化 */
+@media (max-width: 320px) {
+    .couplet.left {
+        left: 10px;
+    }
+
+    .couplet.right {
+        right: 10px;
     }
 }
