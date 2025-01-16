@@ -1,10 +1,12 @@
-/* 基础样式 */
+/* ===== 基础样式 ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 body {
@@ -18,24 +20,26 @@ body {
     align-items: center;
 }
 
-/* 确保容器样式正确 */
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
 html {
     height: -webkit-fill-available;
     scroll-behavior: smooth;
 }
 
-/* 背景动画层 */
+/* ===== 主容器样式 ===== */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+}
+
+/* ===== 背景层样式 ===== */
 .bg-layer {
     position: fixed;
     top: 0;
@@ -56,25 +60,12 @@ html {
     animation: floatPattern 20s linear infinite;
 }
 
-.particles {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, transparent 60%, rgba(0,0,0,0.3));
-}
-
-/* 顶部装饰 */
-.top-decoration {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-}
-
+/* ===== 标题样式 ===== */
 .title-box {
     text-align: center;
     color: #FFD700;
     text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    margin-bottom: 2rem;
     position: relative;
     z-index: 4;
 }
@@ -85,13 +76,7 @@ html {
     animation: glowText 2s ease-in-out infinite alternate;
 }
 
-.subtitle {
-    font-size: 2rem;
-    margin-top: 1rem;
-    opacity: 0.8;
-}
-
-/* 主贺卡区域 */
+/* ===== 贺卡主体样式 ===== */
 .card-container {
     width: 100%;
     max-width: 800px;
@@ -101,143 +86,176 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
 }
 
 .blessing-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
     border-radius: 20px;
     border: 2px solid rgba(255, 215, 0, 0.3);
     padding: 3rem;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 
+        0 0 30px rgba(0, 0, 0, 0.2),
+        inset 0 0 50px rgba(255, 215, 0, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
 .blessing-text {
+    position: relative;
+    z-index: 2;
     text-align: center;
     color: #FFD700;
     font-size: 2rem;
     line-height: 1.8;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
-.blessing-item {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.8s ease;
-}
-
-.blessing-item.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* 底部装饰 */
-.bottom-decoration {
-    margin-top: auto;
-    padding: 1rem;
+/* ===== 装饰元素样式 ===== */
+.lanterns {
+    position: relative;
+    z-index: 3;
     width: 100%;
+    height: 120px;
+    display: flex;
+    justify-content: space-around;
 }
 
-.time-display {
-    margin: 1rem auto;
-    max-width: 90%;
-    background: linear-gradient(145deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
-    padding: 1.5rem;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.3),
-        inset 0 -5px 15px rgba(0, 0, 0, 0.2),
-        inset 0 5px 15px rgba(255, 255, 255, 0.1);
-    transform: perspective(1000px) rotateX(10deg) scale(0.95);
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+.lantern-item {
+    width: 70px;
+    height: 105px;
+    background: url('./images/lantern.png') no-repeat center/contain;
+    filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.5));
+    transform-origin: top center;
+    animation: swinging 3s ease-in-out infinite;
 }
 
-.solar-time {
-    color: #FFD700;
-    font-size: 1.6rem;
-    text-shadow: 
-        0 2px 5px rgba(0, 0, 0, 0.5),
-        0 0 15px rgba(255, 215, 0, 0.5);
-    font-weight: bold;
-    letter-spacing: 0.1rem;
-    transform-style: preserve-3d;
+/* ===== 装饰动画元素 ===== */
+.lucky-items {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.red-packet {
+    position: absolute;
+    width: 40px;
+    height: 50px;
+    background: url('./images/red-packet.png') no-repeat center/contain;
+    animation: falling linear infinite;
+    filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.3));
+}
+
+.gold-coin {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: url('./images/gold-coin.png') no-repeat center/contain;
+    animation: fallingCoin linear infinite;
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+}
+
+/* ===== 对联样式 ===== */
+.couplet-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.couplet {
+    position: fixed;
+    height: 60vh;
+    top: 20vh;
+}
+
+.couplet.left {
+    left: 5vw;
+}
+
+.couplet.right {
+    right: 5vw;
+}
+
+/* ===== 音乐控制样式 ===== */
+.music-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.music-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 215, 0, 0.3);
+    border: 2px solid rgba(255, 215, 0, 0.6);
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    animation: musicRotate 3s linear infinite;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
 }
 
-.time-display:hover {
-    transform: perspective(1000px) rotateX(5deg) scale(1);
-    box-shadow: 
-        0 30px 60px rgba(0, 0, 0, 0.4),
-        inset 0 -5px 15px rgba(0, 0, 0, 0.3),
-        inset 0 5px 15px rgba(255, 255, 255, 0.2);
-}
-
-.time-unit {
-    background: linear-gradient(145deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 215, 0, 0.2);
-    box-shadow: 
-        0 5px 15px rgba(0, 0, 0, 0.2),
-        inset 0 1px 2px rgba(255, 255, 255, 0.1);
-    transform: translateZ(20px);
-}
-
-.time-separator {
-    color: rgba(255, 215, 0, 0.8);
-    font-size: 2rem;
-    transform: translateZ(10px);
-}
-
-/* 动画定义 */
-@keyframes glowText {
-    from {
-        text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+/* ===== 动画定义 ===== */
+@keyframes falling {
+    0% {
+        transform: translateY(-100vh) rotate(0deg) scale(1);
     }
-    to {
-        text-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+    100% {
+        transform: translateY(100vh) rotate(360deg) scale(1);
     }
 }
 
-@keyframes floatPattern {
-    from {
-        transform: translateX(0) translateY(0);
+@keyframes spinning {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes swinging {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+@keyframes musicRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fallingCoin {
+    0% {
+        transform: translateY(-100vh) rotate(0deg) scale(1);
     }
-    to {
-        transform: translateX(-100%) translateY(-100%);
+    50% {
+        transform: translateY(0) rotate(180deg) scale(1.2);
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg) scale(0.8);
     }
 }
 
-/* 响应式设计 */
+/* ===== 响应式设计 ===== */
 @media (max-width: 768px) {
-    /* 容器调整 */
-    .container {
-        padding: 0.5rem;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
+    .title-box h1 {
+        font-size: 2.5rem;
     }
 
-    .card-container {
-        margin-top: 2rem;
-        flex: 1;
+    .blessing-text {
+        font-size: 1.5rem;
     }
 
-    /* 调整元素间距 */
-    .top-decoration,
-    .bottom-decoration {
-        margin: 1rem 0;
-    }
-
-    /* 优化音乐控制按钮 */
-    .music-control {
-        top: 10px;
-        right: 10px;
+    .lantern-item {
+        width: 50px;
+        height: 75px;
     }
 
     .music-btn {
@@ -245,416 +263,42 @@ html {
         height: 40px;
     }
 
-    /* 卡片内容调整 */
-    .blessing-card {
-        padding: 1rem;
-        margin: 0.5rem;
-    }
-
-    /* 标题调整 */
-    .title-box h1 {
-        font-size: 2rem;
-        letter-spacing: 0.1rem;
-        margin-top: 1rem;
-    }
-
-    .subtitle {
-        font-size: 1rem;
-        margin-top: 0.5rem;
-    }
-
-    /* 祝福语调整 */
-    .blessing-text {
-        font-size: 1.2rem;
-        line-height: 1.5;
-        padding: 0.5rem;
-    }
-
-    /* 装饰元素调整 */
-    .lantern-item {
-        transform: scale(0.7);
-    }
-
     .red-packet {
-        width: 20px;
-        height: 25px;
+        width: 30px;
+        height: 40px;
     }
 
     .gold-coin {
-        width: 15px;
-        height: 15px;
-    }
-
-    /* 对联调整 */
-    .couplet-container {
-        display: block;
-        transform: none;
-    }
-
-    .couplet {
-        width: 40px;
-    }
-
-    .couplet.left {
-        left: 5px;
-    }
-
-    .couplet.right {
-        right: 5px;
-    }
-
-    .couplet-paper {
-        padding: 20px 10px;
-    }
-
-    .couplet-paper span {
-        font-size: 18px;
-        letter-spacing: 8px;
-    }
-
-    /* 调整流苏大小 */
-    .couplet-tassel {
-        width: 20px;
-        height: 30px;
-    }
-
-    /* 时间显示调整 */
-    .time-display {
-        padding: 0.5rem;
-        margin: 0.5rem;
-    }
-
-    .solar-time {
-        font-size: 0.9rem;
-    }
-
-    .time-unit {
-        padding: 0.2rem 0.4rem;
-    }
-
-    /* 音乐控制按钮调整 */
-    .music-control {
-        top: 5px;
-        right: 5px;
-    }
-
-    .music-btn {
-        width: 30px;
-        height: 30px;
+        width: 25px;
+        height: 25px;
     }
 }
 
-/* 小屏幕设备额外优化 */
-@media (max-width: 320px) {
+@media (max-width: 480px) {
     .title-box h1 {
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
 
     .blessing-text {
-        font-size: 0.9rem;
-    }
-
-    .couplet {
-        width: 35px;
-    }
-
-    .couplet-paper span {
-        font-size: 16px;
-        letter-spacing: 6px;
-    }
-
-    .couplet-paper {
-        padding: 15px 8px;
-    }
-}
-
-/* 添加横屏适配 */
-@media (max-height: 500px) and (orientation: landscape) {
-    .container {
-        padding: 0.5rem;
+        font-size: 1.2rem;
     }
 
     .blessing-card {
-        padding: 1rem;
+        padding: 1.5rem;
     }
 
-    .title-box h1 {
-        font-size: 1.8rem;
-    }
-}
-
-/* 红包和金币动画 */
-.lucky-items {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-.red-packet {
-    position: absolute;
-    width: 40px;
-    height: 50px;
-    background: url('/your-repo-name/images/red-packet.png') no-repeat center/contain;
-    animation: falling 4s linear infinite;
-}
-
-.red-packet::after {
-    display: none;
-}
-
-.gold-coin {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background: url('/your-repo-name/images/gold-coin.png') no-repeat center/contain;
-    animation: spinning 4s linear infinite;
-}
-
-/* 灯笼容器样式 */
-.lanterns {
-    position: relative;
-    z-index: 3;
-}
-
-/* 灯笼样式 */
-.lantern-item {
-    position: absolute;
-    width: 70px;
-    height: 105px;
-    background: url('/your-repo-name/images/lantern.png') no-repeat center/contain;
-    filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.5));
-    transform-origin: top center;
-}
-
-/* 调整每个灯笼的位置和动画 */
-.lantern-item.top:nth-child(1), 
-.lantern-item.top:nth-child(2) { 
-    animation: swingLantern 3s ease-in-out infinite; 
-}
-
-.lantern-item.top:nth-child(3), 
-.lantern-item.top:nth-child(4) { 
-    animation: swingLantern 3s ease-in-out infinite 1s; 
-}
-
-.lantern-item.top:nth-child(5), 
-.lantern-item.top:nth-child(6) { 
-    animation: swingLantern 3s ease-in-out infinite 2s; 
-}
-
-/* 灯笼摆动动画 */
-@keyframes swingLantern {
-    0%, 100% {
-        transform: rotate(-5deg);
-    }
-    50% {
-        transform: rotate(5deg);
-    }
-}
-
-/* 移动端适配 */
-@media (max-width: 768px) {
-    .lantern-item {
+    .fu-decoration {
         width: 60px;
-        height: 90px;
+        height: 60px;
     }
 }
 
-/* 动画定义 */
-@keyframes falling {
-    0% {
-        transform: translateY(-100px) rotate(0deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0.3;
-    }
-}
-
-@keyframes spinning {
-    0% {
-        transform: translateY(-100px) rotate(0deg) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(100vh) rotate(720deg) scale(0.5);
-        opacity: 0.3;
-    }
-}
-
-@keyframes swinging {
-    0%, 100% {
-        transform: rotate(-5deg) translateY(0);
-    }
-    50% {
-        transform: rotate(5deg) translateY(-10px);
-    }
-}
-
-/* 添加闪烁效果 */
-.blessing-card {
-    animation: cardGlow 2s ease-in-out infinite alternate;
-}
-
-@keyframes cardGlow {
-    from {
-        box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
-    }
-    to {
-        box-shadow: 0 0 50px rgba(255, 215, 0, 0.4);
-    }
-}
-
-/* 祝福语动画优化 */
-.blessing-item.active {
-    animation: textBounce 0.6s ease-out;
-}
-
-@keyframes textBounce {
-    0% {
-        transform: scale(0.3);
-        opacity: 0;
-    }
-    70% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-/* 添加侧边装饰样式 */
-.side-decorations {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-}
-
-.decoration {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    width: 80px;
-}
-
-/* 中国结样式 */
-.chinese-knot {
-    width: 80px;
-    height: 100px;
-    background: url('/your-repo-name/images/fu.png') no-repeat center/contain;
-    position: relative;
-    animation: floatKnot 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
-}
-
-.chinese-knot::before {
-    display: none;
-}
-
-/* 云纹装饰 */
-.cloud-pattern {
-    width: 100%;
-    height: 40px;
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
-    border-radius: 20px;
-    position: relative;
-    animation: floatCloud 4s ease-in-out infinite;
-}
-
-.cloud-pattern::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    height: 2px;
-    background: rgba(255, 215, 0, 0.3);
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-}
-
-/* 装饰动画 */
-@keyframes floatKnot {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-}
-
-@keyframes floatCloud {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    50% {
-        transform: translateX(10px);
-    }
-}
-
-/* 调整祝福语区域 */
-.blessing-text {
-    flex: 1;
-    padding: 0 1rem;
-    position: relative;
-}
-
-/* 移动端适配 */
-@media (max-width: 768px) {
-    .decoration {
-        width: 60px;
-    }
-
-    .chinese-knot {
-        width: 50px;
-        height: 70px;
-    }
-
-    .cloud-pattern {
-        height: 30px;
-    }
-}
-
-/* 对联样式 */
-.couplet-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 3;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 min(5vw, 30px);
-}
-
-.couplet {
-    position: relative;
-    height: min(70vh, 500px);
-    margin-top: 15vh;
-}
-
-.couplet.left {
-    left: 20px;
-    top: 15vh;
-}
-
-.couplet.right {
-    right: 20px;
-    top: 15vh;
-}
-
+/* ===== 对联纸张样式 ===== */
 .couplet-paper {
     height: 100%;
     width: min(40px, 8vw);
     background: linear-gradient(to bottom, #FFE4B5, #FFE4B5);
-    padding: min(20px, 4vw) min(10px, 2vw);
+    padding: 30px 15px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
     border: 2px solid #800000;
@@ -673,234 +317,66 @@ html {
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
-.couplet-tassel {
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 40px;
-    background: #FF0000;
-    border-radius: 15px 15px 0 0;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
-}
-
-.couplet-tassel::after {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 40px;
-    background: linear-gradient(to bottom, #FF0000, #FFD700);
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-}
-
-/* 对联动画 */
-@keyframes coupletGlow {
-    from {
-        box-shadow: 
-            0 0 30px rgba(255, 215, 0, 0.3),
-            inset 0 0 20px rgba(255, 255, 255, 0.2);
-    }
-    to {
-        box-shadow: 
-            0 0 50px rgba(255, 215, 0, 0.5),
-            inset 0 0 30px rgba(255, 255, 255, 0.3);
-    }
-}
-
-/* 底部装饰样式 */
-.footer-decoration {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 150px;
-    z-index: 2;
-    pointer-events: none;
-}
-
-/* 祥云装饰 */
-.auspicious-clouds {
-    position: absolute;
-    bottom: 40px;
-    width: 100%;
-    height: 120px;
-    overflow: hidden;
-}
-
-.cloud-item {
-    position: absolute;
-    width: 180px;
-    height: 70px;
-    opacity: 0.8;
-    filter: brightness(1.2);
-    animation: cloudFloat 20s linear infinite;
-}
-
-/* 为不同类型的云朵设置不同的图片 */
-.cloud-item[data-type="cloud1"] {
-    background: url('/your-repo-name/images/cloud.png') no-repeat center/contain;
-}
-
-.cloud-item[data-type="cloud2"] {
-    background: url('/your-repo-name/images/cloud2.png') no-repeat center/contain;
-}
-
-.cloud-item[data-type="cloud3"] {
-    background: url('/your-repo-name/images/cloud3.png') no-repeat center/contain;
-}
-
-/* 为每个云朵设置不同的起始位置和动画延迟 */
-.cloud-item:nth-child(1) { bottom: 0; animation-delay: -3s; }
-.cloud-item:nth-child(2) { bottom: 30px; animation-delay: 0s; }
-.cloud-item:nth-child(3) { bottom: 10px; animation-delay: -9s; }
-.cloud-item:nth-child(4) { bottom: 40px; animation-delay: -6s; }
-.cloud-item:nth-child(5) { bottom: 20px; animation-delay: -15s; }
-.cloud-item:nth-child(6) { bottom: 5px; animation-delay: -12s; }
-.cloud-item:nth-child(7) { bottom: 35px; animation-delay: -4.5s; }
-.cloud-item:nth-child(8) { bottom: 15px; animation-delay: -10.5s; }
-.cloud-item:nth-child(9) { bottom: 25px; animation-delay: -7.5s; }
-
-/* 修改云朵动画 */
-@keyframes cloudFloat {
-    0% {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.8;
-    }
-    90% {
-        opacity: 0.8;
-    }
-    100% {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-}
-
-/* 移动端适配 */
-@media (max-width: 768px) {
-    .cloud-item {
-        width: 120px;
-        height: 50px;
-    }
-}
-
-/* 波浪动画 */
-.waves {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 60px;
-    overflow: hidden;
-}
-
-.wave {
-    position: absolute;
-    bottom: 0;
-    width: 200%;
-    height: 100%;
-    background: linear-gradient(to bottom, transparent, rgba(255, 215, 0, 0.1));
-    animation: waveMove 10s linear infinite;
-}
-
-.wave1 {
-    animation-delay: 0s;
-    opacity: 0.3;
-}
-
-.wave2 {
-    animation-delay: -5s;
-    opacity: 0.2;
-}
-
-/* 底部元素 */
-.bottom-elements {
-    position: absolute;
-    bottom: 10px;
+/* ===== 底部装饰样式 ===== */
+.bottom-decoration {
+    margin-top: auto;
+    padding: 1rem;
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 2rem;
 }
 
-.snake-coin {
-    width: 40px;
-    height: 40px;
-    background: radial-gradient(circle at 30%, #FFD700, #FFA500);
-    border-radius: 50%;
-    border: 2px solid #FFD700;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-    position: relative;
-    animation: rotate360 10s linear infinite;
+.time-display {
+    margin: 1rem auto;
+    max-width: 90%;
+    background: linear-gradient(145deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+    padding: 1.5rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        inset 0 -5px 15px rgba(0, 0, 0, 0.2),
+        inset 0 5px 15px rgba(255, 255, 255, 0.1);
+    transform: perspective(1000px) rotateX(10deg) scale(0.95);
+    backdrop-filter: blur(10px);
 }
 
-.snake-coin::before {
-    content: '蛇';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #800000;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-.signature {
+.time-unit {
     color: #FFD700;
     font-size: 1.2rem;
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-    animation: glow 2s ease-in-out infinite alternate;
+    padding: 0.5rem 1rem;
+    display: inline-block;
 }
 
-/* 动画定义 */
-@keyframes floatCloud {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+/* ===== 开始屏幕样式 ===== */
+.start-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
 }
 
-@keyframes waveMove {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+.start-content {
+    text-align: center;
+    color: #FFD700;
+    animation: pulse 2s ease-in-out infinite;
 }
 
-@keyframes rotate360 {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+.start-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
 }
 
-@keyframes glow {
-    from { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-    to { text-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
-}
-
-/* 移动端适配 */
-@media (max-width: 768px) {
-    .footer-decoration {
-        height: 100px;
-    }
-    
-    .cloud-item {
-        width: 100px;
-        height: 40px;
-    }
-    
-    .snake-coin {
-        width: 30px;
-        height: 30px;
-    }
-    
-    .signature {
-        font-size: 1rem;
-    }
-}
-
-/* 添加装饰图标样式 */
+/* ===== 装饰图标样式 ===== */
 .card-decorations {
     position: absolute;
     width: 100%;
@@ -913,395 +389,294 @@ html {
 
 .decoration-icon {
     position: absolute;
-    width: 200px;
-    height: 200px;
-    bottom: -30px;
+    width: 150px;
+    height: 150px;
+    bottom: 20px;
     filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
 }
 
 .boy-icon {
-    right: -100px;
-    background: url('/your-repo-name/images/boy.png') no-repeat center/contain;
+    right: -50px;
+    background: url('./images/boy.png') no-repeat center/contain;
     transform: scale(0.8);
     animation: boyFloat 3s ease-in-out infinite;
 }
 
 .snake-icon {
-    left: -100px;
-    background: url('/your-repo-name/images/snake2.png') no-repeat center/contain;
+    left: -50px;
+    background: url('./images/snake2.png') no-repeat center/contain;
     transform: scale(0.8) scaleX(-1);
     animation: snakeWiggle 4s ease-in-out infinite;
 }
 
-/* 小男孩浮动动画 */
-@keyframes boyFloat {
-    0%, 100% {
-        transform: scale(0.8) translateY(0);
-        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
-    }
-    50% {
-        transform: scale(0.8) translateY(-15px);
-        filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
-    }
-}
-
-/* 小蛇摆动动画 */
-@keyframes snakeWiggle {
-    0%, 100% {
-        transform: scale(0.8) scaleX(-1) rotate(-3deg);
-        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
-    }
-    50% {
-        transform: scale(0.8) scaleX(-1) rotate(3deg);
-        filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
-    }
-}
-
-/* 添加悬停效果 */
-.blessing-card:hover .boy-icon {
-    animation: boyJump 1s ease-in-out;
-}
-
-.blessing-card:hover .snake-icon {
-    animation: snakeDance 1s ease-in-out;
-}
-
-/* 悬停时的特殊动画 */
-@keyframes boyJump {
-    0%, 100% {
-        transform: scale(0.8) translateY(0);
-    }
-    50% {
-        transform: scale(0.85) translateY(-25px);
-    }
-}
-
-@keyframes snakeDance {
-    0%, 100% {
-        transform: scale(0.8) scaleX(-1) rotate(0deg);
-    }
-    25% {
-        transform: scale(0.85) scaleX(-1) rotate(-5deg);
-    }
-    75% {
-        transform: scale(0.85) scaleX(-1) rotate(5deg);
-    }
-}
-
-/* 修改音乐控制按钮样式 */
-.music-control {
-    position: fixed;
-    top: 30px;          /* 调整位置 */
-    right: 30px;
-    z-index: 1000;
-}
-
-.music-btn {
-    width: 50px;         /* 增大按钮尺寸 */
-    height: 50px;
-    border-radius: 50%;
-    background: rgba(255, 215, 0, 0.3);  /* 调整背景色 */
-    border: 2px solid rgba(255, 215, 0, 0.6);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: musicRotate 3s linear infinite;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);  /* 添加发光效果 */
-}
-
-.music-icon {
-    font-size: 24px;    /* 增大图标尺寸 */
-    color: #FFD700;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-}
-
-/* 暂停状态样式 */
-.music-btn.paused {
-    animation-play-state: paused;
-    opacity: 0.5;
-    box-shadow: none;
-}
-
-/* 悬停效果 */
-.music-btn:hover {
-    transform: scale(1.1);
-    background: rgba(255, 215, 0, 0.4);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-}
-
-/* 点击效果 */
-.music-btn:active {
-    transform: scale(0.95);
-}
-
-/* 添加初始交互层样式 */
-.start-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    cursor: pointer;
-}
-
-.start-content {
-    text-align: center;
-    color: #FFD700;
-    animation: pulse 1.5s ease-in-out infinite;
-}
-
-.start-content h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-}
-
-.start-content p {
-    font-size: 1.2rem;
-    opacity: 0.8;
-}
-
+/* ===== 额外动画效果 ===== */
 @keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
 }
 
-/* 优化动画性能 */
-.red-packet, .gold-coin, .lantern-item {
-    will-change: transform;
-    transform: translateZ(0);
+@keyframes boyFloat {
+    0%, 100% { transform: scale(0.8) translateY(0); }
+    50% { transform: scale(0.8) translateY(-10px); }
 }
 
-/* 优化触摸体验 */
-.music-btn, .enter-button {
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
+@keyframes snakeWiggle {
+    0%, 100% { transform: scale(0.8) scaleX(-1) rotate(-3deg); }
+    50% { transform: scale(0.8) scaleX(-1) rotate(3deg); }
 }
 
-/* 平滑滚动 */
-html {
-    scroll-behavior: smooth;
-}
-
-/* 加载状态 */
-.loaded {
-    transition: opacity 0.3s ease;
-    opacity: 1;
-}
-
-/* 图片加载优化 */
-img {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-img.loaded {
-    opacity: 1;
-}
-
-/* 调整移动端布局 */
-@media (max-width: 768px) {
-    .top-decoration {
-        position: relative;
-        margin-top: 2rem;
-    }
-
-    .title-box h1 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-    }
-
-    .lantern-item {
-        transform: scale(0.6);
-        opacity: 0.8;
-    }
-
-    .lantern-item.top {
-        top: 10%;
-    }
-}
-
-/* 添加小屏幕设备的适配 */
-@media (max-height: 700px), (max-width: 375px) {
-    /* 整体容器调整 */
+/* ===== 额外的响应式优化 ===== */
+@media (max-height: 700px) {
     .container {
-        transform: scale(0.85);
-        transform-origin: top center;
-        min-height: auto;
-        padding: 0.5rem;
+        padding: 1rem;
     }
 
-    /* 调整顶部装饰 */
-    .top-decoration {
-        margin-bottom: 1rem;
+    .couplet {
+        height: 50vh;
+        top: 25vh;
     }
 
-    /* 调整标题大小 */
-    .title-box h1 {
-        font-size: 1.8rem;
+    .decoration-icon {
+        width: 120px;
+        height: 120px;
     }
+}
 
-    .subtitle {
-        font-size: 1rem;
-    }
-
-    /* 调整贺卡内容 */
-    .blessing-card {
-        padding: 1.5rem;
-        margin: 0.5rem;
-    }
-
-    .blessing-text {
-        font-size: 1rem;
-        line-height: 1.4;
-    }
-
-    /* 调整装饰元素 */
-    .lantern-item {
-        transform: scale(0.5);
-    }
-
-    /* 调整对联大小和位置 */
-    .couplet-container {
-        transform: scale(0.6);
-    }
-
-    .couplet.left {
-        left: 0;
-    }
-
-    .couplet.right {
-        right: 0;
-    }
-
-    /* 调整底部元素 */
-    .bottom-decoration {
-        margin-top: 1rem;
-    }
-
-    .time-display {
-        padding: 0.8rem;
-    }
-
+@media (max-width: 320px) {
     .time-unit {
-        padding: 0.2rem 0.4rem;
-        font-size: 0.8rem;
+        font-size: 0.9rem;
+        padding: 0.3rem 0.6rem;
     }
 
-    /* 调整底部波浪 */
-    .waves {
-        height: 40px;
-    }
-
-    /* 调整音乐控制按钮 */
-    .music-btn {
-        width: 30px;
-        height: 30px;
+    .start-content h2 {
+        font-size: 1.5rem;
     }
 }
 
-/* 超小屏幕的额外调整 */
-@media (max-height: 600px) {
-    .container {
-        transform: scale(0.75);
-    }
-
-    /* 隐藏一些装饰元素 */
-    .cloud-item:nth-child(n+7) {
-        display: none;
-    }
-
-    /* 进一步缩小间距 */
-    .top-decoration,
-    .bottom-decoration {
-        margin: 0.5rem 0;
-    }
-}
-
-/* 添加滚动支持 */
-@media (max-height: 500px) {
-    body {
-        height: auto;
-        min-height: 100vh;
-        overflow-y: auto;
-    }
-
-    .container {
-        padding-bottom: 2rem;
-    }
-
-    /* 固定音乐控制按钮 */
-    .music-control {
-        position: fixed;
-        top: 10px;
-        right: 10px;
-    }
-}
-
-/* 横屏模式优化 */
+/* ===== 横屏模式优化 ===== */
 @media (orientation: landscape) and (max-height: 450px) {
-    body {
-        overflow-y: auto;
-    }
-
     .container {
-        transform: scale(0.7);
-        padding: 1rem 0;
+        padding: 0.5rem;
     }
 
     .blessing-card {
         max-height: 70vh;
         overflow-y: auto;
     }
-}
 
-/* 移动端对联样式优化 */
-@media (max-width: 768px) {
     .couplet {
-        height: 60vh;
-    }
-
-    .couplet.left {
-        left: 10px;
-    }
-
-    .couplet.right {
-        right: 10px;
-    }
-
-    .couplet-paper {
-        padding: 30px 12px;
-    }
-
-    .couplet-paper span {
-        font-size: max(18px, min(3vh, 22px));
-        letter-spacing: max(6px, min(1.5vh, 10px));
+        height: 80vh;
+        top: 10vh;
     }
 }
 
-/* 小屏幕额外优化 */
-@media (max-width: 320px) {
-    .couplet.left {
-        left: 5px;
-    }
+/* 卡片背景装饰 */
+.card-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 20px;
+}
 
-    .couplet.right {
-        right: 5px;
-    }
+.pattern-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 215, 0, 0.05) 0%,
+        rgba(255, 0, 0, 0.05) 100%
+    );
+    opacity: 0.1;
+}
 
-    .couplet-paper {
-        padding: 20px 8px;
+/* 福字装饰优化 - 增强对比度和可见度 */
+.fu-decoration {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    height: 450px;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 1;
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.3));
+}
+
+.fu-character {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 360px;
+    font-family: "STKaiti", "楷体", "SimKai", serif;
+    color: #FFF;
+    background: linear-gradient(45deg, 
+        #FFD700 0%,
+        #FFF 45%,
+        #FFD700 55%,
+        #FF4500 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 
+        0 0 50px rgba(255, 255, 255, 1.0),
+        0 0 100px rgba(255, 215, 0, 0.9),
+        0 0 150px rgba(255, 165, 0, 0.7),
+        0 2px 4px rgba(0, 0, 0, 0.5);
+    -webkit-text-stroke: 3px rgba(255, 215, 0, 1.0);
+    animation: fuFloat 8s ease-in-out infinite;
+    transform-origin: center center;
+    filter: brightness(1.3) contrast(1.3);
+}
+
+.fu-character::before {
+    content: "福";
+    display: block;
+    transform: rotate(-15deg);
+}
+
+/* 主要内容层 */
+.blessing-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* 动画效果 */
+@keyframes patternFloat {
+    from { transform: translate(0, 0) rotate(0deg); }
+    to { transform: translate(-200px, -200px) rotate(360deg); }
+}
+
+@keyframes fuFloat {
+    0%, 100% {
+        transform: rotate(-8deg) scale(1) translateY(0);
+        opacity: 0.6;
+        filter: brightness(1.3) contrast(1.3) hue-rotate(0deg);
+    }
+    50% {
+        transform: rotate(8deg) scale(1.2) translateY(-10px);
+        opacity: 0.8;
+        filter: brightness(1.5) contrast(1.4) hue-rotate(15deg);
     }
 }
+
+/* 添加光晕效果 */
+.blessing-card::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 215, 0, 0.15) 0%,
+        rgba(255, 215, 0, 0) 70%
+    );
+    pointer-events: none;
+    animation: glowPulse 4s ease-in-out infinite;
+}
+
+/* 光晕动画 */
+@keyframes glowPulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.15;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.2;
+    }
+}
+
+/* 添加边框发光效果 */
+.blessing-card::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 20px;
+    background: linear-gradient(45deg, 
+        rgba(255, 215, 0, 0.2),
+        rgba(255, 0, 0, 0.2),
+        rgba(255, 215, 0, 0.2)
+    );
+    z-index: -1;
+    animation: borderGlow 3s ease-in-out infinite;
+}
+
+/* 边框发光动画 */
+@keyframes borderGlow {
+    0%, 100% {
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* 添加背景光晕效果 */
+.fu-decoration::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140%;
+    height: 140%;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 215, 0, 0.2) 30%,
+        rgba(255, 69, 0, 0.1) 50%,
+        transparent 70%
+    );
+    animation: glowPulse 4s ease-in-out infinite;
+    filter: blur(10px);
+}
+
+/* 添加额外的装饰效果 */
+.fu-decoration::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 120%;
+    height: 120%;
+    background: linear-gradient(
+        45deg,
+        transparent 45%,
+        rgba(255, 215, 0, 0.1) 48%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 215, 0, 0.1) 52%,
+        transparent 55%
+    );
+    animation: shineEffect 4s ease-in-out infinite;
+}
+
+/* 闪光效果动画 */
+@keyframes shineEffect {
+    0%, 100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(45deg) scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(45deg) scale(1.2);
+    }
+}
+
+/* [继续...] */
