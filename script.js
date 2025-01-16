@@ -98,19 +98,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 修改开始屏幕处理
     const startScreen = document.querySelector('.start-screen');
-    if (startScreen) {  // 添加检查
+    if (startScreen) {
         startScreen.addEventListener('click', function() {
             const bgMusic = document.getElementById('bgMusic');
             const musicToggle = document.getElementById('musicToggle');
             
-            // 播放音乐
-            bgMusic.volume = 1.0;  // 设置音量
-            bgMusic.play().then(() => {
-                musicToggle.classList.remove('paused');
-            }).catch(error => {
-                console.log('播放失败:', error);
-                musicToggle.classList.add('paused');
-            });
+            // 使用用户交互来触发音频播放
+            const playAudio = () => {
+                bgMusic.volume = 1.0;
+                bgMusic.play().then(() => {
+                    musicToggle.classList.remove('paused');
+                    document.removeEventListener('touchstart', playAudio);
+                }).catch(error => {
+                    console.log('播放失败:', error);
+                    musicToggle.classList.add('paused');
+                });
+            };
+
+            // 同时监听触摸和点击事件
+            document.addEventListener('touchstart', playAudio, { once: true });
+            playAudio();
             
             // 隐藏开始屏幕
             startScreen.style.opacity = '0';
