@@ -281,7 +281,11 @@ html {
     /* 对联调整 */
     .couplet-container {
         display: block;
-        transform: scale(0.7);
+        transform: none;
+    }
+
+    .couplet {
+        width: 40px;
     }
 
     .couplet.left {
@@ -290,6 +294,21 @@ html {
 
     .couplet.right {
         right: 5px;
+    }
+
+    .couplet-paper {
+        padding: 20px 10px;
+    }
+
+    .couplet-paper span {
+        font-size: 18px;
+        letter-spacing: 8px;
+    }
+
+    /* 调整流苏大小 */
+    .couplet-tassel {
+        width: 20px;
+        height: 30px;
     }
 
     /* 时间显示调整 */
@@ -326,6 +345,19 @@ html {
 
     .blessing-text {
         font-size: 0.9rem;
+    }
+
+    .couplet {
+        width: 35px;
+    }
+
+    .couplet-paper span {
+        font-size: 16px;
+        letter-spacing: 6px;
+    }
+
+    .couplet-paper {
+        padding: 15px 8px;
     }
 }
 
@@ -596,8 +628,7 @@ html {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 4vw;
-    height: 50vh;
+    width: 60px;
 }
 
 .couplet.left {
@@ -609,28 +640,19 @@ html {
 }
 
 .couplet-paper {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, #FFD700, #FFA500);
-    border: 2px solid #800000;
+    background: linear-gradient(to bottom, #FFE4B5, #FFE4B5);
+    padding: 30px 15px;
     border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2vw 0.5vw;
-    box-shadow: 
-        0 0 30px rgba(255, 215, 0, 0.3),
-        inset 0 0 20px rgba(255, 255, 255, 0.2);
-    animation: coupletGlow 2s ease-in-out infinite alternate;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
 }
 
 .couplet-paper span {
     writing-mode: vertical-rl;
     text-orientation: upright;
     color: #800000;
-    font-size: 2vw;
+    font-size: 24px;
     font-weight: bold;
-    letter-spacing: 1vw;
+    letter-spacing: 10px;
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
