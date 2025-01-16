@@ -179,4 +179,51 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+    // 添加红包和金币生成函数
+    function createLuckyItems() {
+        const luckyContainer = document.querySelector('.lucky-items');
+        const screenWidth = window.innerWidth;
+        
+        // 生成红包
+        for(let i = 0; i < 20; i++) { // 增加数量到20个
+            const redPacket = document.createElement('div');
+            redPacket.className = 'red-packet';
+            // 随机位置和延迟
+            const left = Math.random() * 98; // 随机左边距
+            const delay = Math.random() * 8; // 随机延迟
+            const duration = 5 + Math.random() * 3; // 随机动画持续时间5-8秒
+            
+            redPacket.style.cssText = `
+                left: ${left}%;
+                animation-delay: ${delay}s;
+                animation-duration: ${duration}s;
+                transform: rotate(${Math.random() * 360}deg);
+            `;
+            
+            luckyContainer.appendChild(redPacket);
+        }
+        
+        // 生成金币
+        for(let i = 0; i < 25; i++) { // 增加数量到25个
+            const goldCoin = document.createElement('div');
+            goldCoin.className = 'gold-coin';
+            // 随机位置和延迟
+            const left = Math.random() * 98;
+            const delay = Math.random() * 8;
+            const duration = 4 + Math.random() * 3; // 随机动画持续时间4-7秒
+            
+            goldCoin.style.cssText = `
+                left: ${left}%;
+                animation-delay: ${delay}s;
+                animation-duration: ${duration}s;
+                transform: rotate(${Math.random() * 360}deg);
+            `;
+            
+            luckyContainer.appendChild(goldCoin);
+        }
+    }
+
+    // 在页面加载时创建红包和金币
+    createLuckyItems();
 });
