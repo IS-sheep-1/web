@@ -64,70 +64,74 @@ document.addEventListener('DOMContentLoaded', () => {
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
 
-        // 尝试播放音乐
-        function tryPlayMusic() {
-            bgMusic.volume = 0.5;
-            let playPromise = bgMusic.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    musicToggle.classList.remove('paused');
-                }).catch(() => {
-                    musicToggle.classList.add('paused');
-                    // 添加点击播放提示
-                    showPlayTip();
-                });
-            }
+        // 设置初始状态
+        if (bgMusic.paused) {
+            musicToggle.classList.add('paused');
         }
 
-        // 添加音乐播放提示
-        function showPlayTip() {
-            const tip = document.createElement('div');
-            tip.className = 'play-tip';
-            tip.textContent = '点击任意处播放音乐';
-            document.body.appendChild(tip);
-
-            // 点击任意处播放
-            function playOnClick() {
-                bgMusic.play();
-                musicToggle.classList.remove('paused');
-                tip.remove();
-                document.removeEventListener('click', playOnClick);
-            }
-
-            document.addEventListener('click', playOnClick);
-        }
-
-        // 音乐控制
-        musicToggle.addEventListener('click', (e) => {
+        // 音乐控制按钮点击事件
+        musicToggle.addEventListener('click', function(e) {
             e.stopPropagation();
             if (bgMusic.paused) {
-                bgMusic.play();
-                musicToggle.classList.remove('paused');
+                bgMusic.volume = 1.0;
+                bgMusic.play().then(() => {
+                    musicToggle.classList.remove('paused');
+                }).catch(error => {
+                    console.log('播放失败:', error);
+                    musicToggle.classList.add('paused');
+                });
             } else {
                 bgMusic.pause();
                 musicToggle.classList.add('paused');
             }
         });
 
-        // 页面加载完成后尝试播放
-        window.addEventListener('load', tryPlayMusic);
+        // 添加音频加载错误处理
+        bgMusic.addEventListener('error', (e) => {
+            console.error('音频加载错误:', e);
+            musicToggle.classList.add('paused');
+        });
     }
 
-    // 初始化
-    document.addEventListener('DOMContentLoaded', initAudio);
+    // 初始化音频
+    initAudio();
 
-    // 添加开始屏幕处理
+    // 修改开始屏幕处理
     const startScreen = document.querySelector('.start-screen');
-    startScreen.addEventListener('click', function() {
-        // 播放音乐
-        bgMusic.play();
-        musicToggle.classList.remove('paused');
-        // 隐藏开始屏幕
-        startScreen.style.opacity = '0';
-        setTimeout(() => {
-            startScreen.style.display = 'none';
-        }, 500);
+    if (startScreen) {  // 添加检查
+        startScreen.addEventListener('click', function() {
+            const bgMusic = document.getElementById('bgMusic');
+            const musicToggle = document.getElementById('musicToggle');
+            
+            // 播放音乐
+            bgMusic.volume = 1.0;  // 设置音量
+            bgMusic.play().then(() => {
+                musicToggle.classList.remove('paused');
+            }).catch(error => {
+                console.log('播放失败:', error);
+                musicToggle.classList.add('paused');
+            });
+            
+            // 隐藏开始屏幕
+            startScreen.style.opacity = '0';
+            setTimeout(() => {
+                startScreen.style.display = 'none';
+            }, 500);
+        });
+    }
+
+    // 添加页面可见性变化处理
+    document.addEventListener('visibilitychange', () => {
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        
+        if (document.hidden) {
+            // 页面隐藏时暂停音乐
+            if (!bgMusic.paused) {
+                bgMusic.pause();
+                musicToggle.classList.add('paused');
+            }
+        }
     });
 
     // 添加加载状态检测
