@@ -5,22 +5,24 @@
     box-sizing: border-box;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 body {
     min-height: 100vh;
+    min-height: -webkit-fill-available;
     background: linear-gradient(135deg, #D4145A 0%, #8B0000 100%);
     font-family: "Microsoft YaHei", "STKaiti", sans-serif;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     overflow-x: hidden;
-    min-height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 html {
     height: -webkit-fill-available;
+    scroll-behavior: smooth;
 }
 
 /* 背景动画层 */
@@ -38,7 +40,9 @@ html {
     width: 100%;
     height: 100%;
     background-image: url('dragon-pattern.png');
-    opacity: 0.1;
+    background-size: 200px;
+    background-repeat: repeat;
+    opacity: 0.08;
     animation: floatPattern 20s linear infinite;
 }
 
@@ -51,11 +55,15 @@ html {
 
 /* 主容器 */
 .container {
-    position: relative;
-    z-index: 2;
-    width: 80vw;
+    width: 100%;
     max-width: 1200px;
-    padding: 2rem;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }
 
 /* 顶部装饰 */
@@ -86,8 +94,10 @@ html {
 
 /* 主贺卡区域 */
 .card-container {
-    position: relative;
-    padding: 2rem;
+    width: 100%;
+    max-width: 800px;
+    margin: 1rem auto;
+    padding: 1rem;
 }
 
 .blessing-card {
@@ -200,59 +210,91 @@ html {
 
 /* 响应式设计 */
 @media (max-width: 768px) {
+    /* 容器调整 */
     .container {
-        width: 95vw;
-        padding: 1rem;
+        padding: 0.5rem;
+        justify-content: flex-start;
     }
 
+    /* 卡片内容调整 */
+    .blessing-card {
+        padding: 1rem;
+        margin: 0.5rem;
+    }
+
+    /* 标题调整 */
     .title-box h1 {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
+        letter-spacing: 0.1rem;
+        margin-top: 1rem;
     }
 
     .subtitle {
+        font-size: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    /* 祝福语调整 */
+    .blessing-text {
+        font-size: 1rem;
+        line-height: 1.5;
+        padding: 0.5rem;
+    }
+
+    /* 装饰元素调整 */
+    .lantern-item {
+        transform: scale(0.4);
+    }
+
+    .red-packet {
+        width: 20px;
+        height: 25px;
+    }
+
+    .gold-coin {
+        width: 15px;
+        height: 15px;
+    }
+
+    /* 对联调整 */
+    .couplet-container {
+        display: none; /* 在移动端隐藏对联 */
+    }
+
+    /* 时间显示调整 */
+    .time-display {
+        padding: 0.5rem;
+        margin: 0.5rem;
+    }
+
+    .solar-time {
+        font-size: 0.9rem;
+    }
+
+    .time-unit {
+        padding: 0.2rem 0.4rem;
+    }
+
+    /* 音乐控制按钮调整 */
+    .music-control {
+        top: 5px;
+        right: 5px;
+    }
+
+    .music-btn {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* 小屏幕设备额外优化 */
+@media (max-width: 320px) {
+    .title-box h1 {
         font-size: 1.5rem;
     }
 
     .blessing-text {
-        font-size: 1.5rem;
-    }
-
-    .time-display {
-        padding: 1rem;
-    }
-
-    .solar-time {
-        font-size: 1.2rem;
-    }
-
-    /* 调整装饰元素大小 */
-    .lantern {
-        transform: scale(0.7);
-    }
-
-    .cloud {
-        transform: scale(0.7);
-    }
-
-    /* 调整对联大小 */
-    .couplet {
-        transform: scale(0.8);
-    }
-
-    /* 调整底部波浪 */
-    .waves {
-        height: 50px;
-    }
-
-    /* 调整音乐控制按钮 */
-    .music-control {
-        top: 15px;
-        right: 15px;
-    }
-
-    .music-btn {
-        width: 40px;
-        height: 40px;
+        font-size: 0.9rem;
     }
 }
 
@@ -262,12 +304,12 @@ html {
         padding: 0.5rem;
     }
 
-    .title-box h1 {
-        font-size: 2rem;
+    .blessing-card {
+        padding: 1rem;
     }
 
-    .blessing-text {
-        font-size: 1.2rem;
+    .title-box h1 {
+        font-size: 1.8rem;
     }
 }
 
@@ -975,4 +1017,38 @@ html {
     50% {
         transform: scale(1.1);
     }
+}
+
+/* 优化动画性能 */
+.red-packet, .gold-coin, .lantern-item {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* 优化触摸体验 */
+.music-btn, .enter-button {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* 平滑滚动 */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 加载状态 */
+.loaded {
+    transition: opacity 0.3s ease;
+    opacity: 1;
+}
+
+/* 图片加载优化 */
+img {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+img.loaded {
+    opacity: 1;
 }
