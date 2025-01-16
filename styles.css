@@ -625,35 +625,40 @@ html {
 }
 
 .couplet {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 80px;
+    position: fixed;
+    height: 70vh;
+    width: auto;
 }
 
 .couplet.left {
-    left: 10px;
+    left: 20px;
+    top: 15vh;
 }
 
 .couplet.right {
-    right: 10px;
+    right: 20px;
+    top: 15vh;
 }
 
 .couplet-paper {
+    height: 100%;
     background: linear-gradient(to bottom, #FFE4B5, #FFE4B5);
-    padding: 40px 20px;
+    padding: 40px 15px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
     border: 2px solid #800000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .couplet-paper span {
     writing-mode: vertical-rl;
     text-orientation: upright;
     color: #800000;
-    font-size: 28px;
+    font-size: max(24px, min(4vh, 28px));
     font-weight: bold;
-    letter-spacing: 15px;
+    letter-spacing: max(8px, min(2vh, 15px));
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
@@ -1254,34 +1259,38 @@ img.loaded {
 /* 移动端对联样式优化 */
 @media (max-width: 768px) {
     .couplet {
-        width: 50px;
+        height: 60vh;
     }
 
-    .couplet.left {
-        left: 15px;
-    }
-
-    .couplet.right {
-        right: 15px;
-    }
-
-    .couplet-paper {
-        padding: 30px 15px;
-    }
-
-    .couplet-paper span {
-        font-size: 22px;
-        letter-spacing: 10px;
-    }
-}
-
-/* 小屏幕额外优化 */
-@media (max-width: 320px) {
     .couplet.left {
         left: 10px;
     }
 
     .couplet.right {
         right: 10px;
+    }
+
+    .couplet-paper {
+        padding: 30px 12px;
+    }
+
+    .couplet-paper span {
+        font-size: max(18px, min(3vh, 22px));
+        letter-spacing: max(6px, min(1.5vh, 10px));
+    }
+}
+
+/* 小屏幕额外优化 */
+@media (max-width: 320px) {
+    .couplet.left {
+        left: 5px;
+    }
+
+    .couplet.right {
+        right: 5px;
+    }
+
+    .couplet-paper {
+        padding: 20px 8px;
     }
 }
