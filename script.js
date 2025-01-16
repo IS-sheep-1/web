@@ -59,50 +59,63 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTime();
     setInterval(updateTime, 1000);
 
-    // 添加音乐控制功能
-    const bgMusic = document.getElementById('bgMusic');
-    const musicToggle = document.getElementById('musicToggle');
-    
-    // 尝试自动播放
-    function tryAutoplay() {
-        // 设置音量为0
-        bgMusic.volume = 0;
-        
-        // 尝试播放
-        let playPromise = bgMusic.play();
-        
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                // 自动播放成功，逐渐增加音量
-                bgMusic.volume = 1;
-                musicToggle.classList.remove('paused');
-            }).catch(() => {
-                // 自动播放失败，等待用户交互
-                musicToggle.classList.add('paused');
-                
-                // 添加一次性点击事件监听器
-                document.addEventListener('click', function initAudio() {
-                    bgMusic.play();
+    // 音乐播放初始化
+    function initAudio() {
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+
+        // 尝试播放音乐
+        function tryPlayMusic() {
+            bgMusic.volume = 0.5;
+            let playPromise = bgMusic.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
                     musicToggle.classList.remove('paused');
-                    document.removeEventListener('click', initAudio);
-                }, { once: true });
-            });
+                }).catch(() => {
+                    musicToggle.classList.add('paused');
+                    // 添加点击播放提示
+                    showPlayTip();
+                });
+            }
         }
+
+        // 添加音乐播放提示
+        function showPlayTip() {
+            const tip = document.createElement('div');
+            tip.className = 'play-tip';
+            tip.textContent = '点击任意处播放音乐';
+            document.body.appendChild(tip);
+
+            // 点击任意处播放
+            function playOnClick() {
+                bgMusic.play();
+                musicToggle.classList.remove('paused');
+                tip.remove();
+                document.removeEventListener('click', playOnClick);
+            }
+
+            document.addEventListener('click', playOnClick);
+        }
+
+        // 音乐控制
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (bgMusic.paused) {
+                bgMusic.play();
+                musicToggle.classList.remove('paused');
+            } else {
+                bgMusic.pause();
+                musicToggle.classList.add('paused');
+            }
+        });
+
+        // 页面加载完成后尝试播放
+        window.addEventListener('load', tryPlayMusic);
     }
 
-    // 尝试自动播放
-    tryAutoplay();
-
-    // 音乐控制按钮点击事件
-    musicToggle.addEventListener('click', function() {
-        if (bgMusic.paused) {
-            bgMusic.play();
-            musicToggle.classList.remove('paused');
-        } else {
-            bgMusic.pause();
-            musicToggle.classList.add('paused');
-        }
-    });
+    // 初始化
+    document.addEventListener('DOMContentLoaded', initAudio);
 
     // 添加开始屏幕处理
     const startScreen = document.querySelector('.start-screen');
@@ -115,5 +128,22 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             startScreen.style.display = 'none';
         }, 500);
+    });
+
+    // 添加加载状态检测
+    window.addEventListener('load', () => {
+        document.body.classList.add('loaded');
+    });
+
+    // 优化图片加载
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+        if (img.complete) {
+            img.classList.add('loaded');
+        } else {
+            img.addEventListener('load', () => {
+                img.classList.add('loaded');
+            });
+        }
     });
 });
