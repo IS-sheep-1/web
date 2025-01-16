@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>龙年贺卡</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 背景动画层 -->
+    <div class="bg-layer">
+        <div class="dragon-pattern"></div>
+        <div class="particles"></div>
+        <!-- 添加红包和金币动画 -->
+        <div class="lucky-items">
+            <div class="red-packet" style="left: 5%; animation-delay: 0s;"></div>
+            <div class="red-packet" style="left: 25%; animation-delay: 1s;"></div>
+            <div class="red-packet" style="left: 45%; animation-delay: 2s;"></div>
+            <div class="red-packet" style="left: 65%; animation-delay: 3s;"></div>
+            <div class="red-packet" style="left: 85%; animation-delay: 4s;"></div>
+            
+            <div class="gold-coin" style="left: 15%; animation-delay: 0.5s;"></div>
+            <div class="gold-coin" style="left: 35%; animation-delay: 1.5s;"></div>
+            <div class="gold-coin" style="left: 55%; animation-delay: 2.5s;"></div>
+            <div class="gold-coin" style="left: 75%; animation-delay: 3.5s;"></div>
+            <div class="gold-coin" style="left: 95%; animation-delay: 4.5s;"></div>
+        </div>
+        <!-- 添加灯笼装饰 -->
+        <div class="lanterns">
+            <!-- 顶部灯笼，6个均匀分布 -->
+            <div class="lantern-item top" style="left: 8%; top: 5%;"></div>
+            <div class="lantern-item top" style="left: 24%; top: 5%;"></div>
+            <div class="lantern-item top" style="left: 40%; top: 5%;"></div>
+            <div class="lantern-item top" style="left: 56%; top: 5%;"></div>
+            <div class="lantern-item top" style="left: 72%; top: 5%;"></div>
+            <div class="lantern-item top" style="left: 88%; top: 5%;"></div>
+        </div>
+    </div>
+
+    <!-- 在 container 外面，bg-layer 后面添加 -->
+    <div class="couplet-container">
+        <!-- 左对联 -->
+        <div class="couplet left">
+            <div class="couplet-paper">
+                <span>金玉满堂迎新春</span>
+            </div>
+            <div class="couplet-tassel"></div>
+        </div>
+        
+        <!-- 右对联 -->
+        <div class="couplet right">
+            <div class="couplet-paper">
+                <span>龙腾盛世纳祥瑞</span>
+            </div>
+            <div class="couplet-tassel"></div>
+        </div>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="container">
+        <!-- 顶部装饰 -->
+        <div class="top-decoration">
+            <div class="lantern left"></div>
+            <div class="title-box">
+                <h1>龙年大吉</h1>
+                <div class="subtitle" id="currentYear"></div>
+            </div>
+            <div class="lantern right"></div>
+        </div>
+
+        <!-- 主贺卡区域 -->
+        <div class="card-container">
+            <div class="blessing-card">
+                <!-- 添加装饰图标 -->
+                <div class="card-decorations">
+                    <div class="decoration-icon boy-icon"></div>
+                    <div class="decoration-icon snake-icon"></div>
+                </div>
+                
+                <div class="card-content">
+                    <!-- 添加装饰元素 -->
+                    <div class="side-decorations">
+                        <div class="decoration left">
+                            <div class="chinese-knot"></div>
+                            <div class="cloud-pattern"></div>
+                        </div>
+                        <div class="blessing-text">
+                            <p class="blessing-item active">恭祝您福如东海寿比南山 阖家幸福安康</p>
+                            <p class="blessing-item">愿你前程似锦 前途光明 事业腾飞</p>
+                            <p class="blessing-item">祝你学业进步 快乐成长 前程似锦</p>
+                        </div>
+                        <div class="decoration right">
+                            <div class="chinese-knot"></div>
+                            <div class="cloud-pattern"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部装饰 -->
+        <div class="bottom-decoration">
+            <div class="cloud left"></div>
+            <div class="time-display">
+                <div class="solar-time"></div>
+                <div class="lunar-time"></div>
+            </div>
+            <div class="cloud right"></div>
+        </div>
+
+        <!-- 添加底部波浪和装饰 -->
+        <div class="footer-decoration">
+            <!-- 祥云装饰 -->
+            <div class="auspicious-clouds">
+                <!-- 使用三种不同的云朵图片 -->
+                <div class="cloud-item" style="left: 0%" data-type="cloud1"></div>
+                <div class="cloud-item" style="left: 20%" data-type="cloud2"></div>
+                <div class="cloud-item" style="left: 40%" data-type="cloud3"></div>
+                <div class="cloud-item" style="left: 60%" data-type="cloud1"></div>
+                <div class="cloud-item" style="left: 80%" data-type="cloud2"></div>
+                <div class="cloud-item" style="left: 100%" data-type="cloud3"></div>
+                <div class="cloud-item" style="left: 120%" data-type="cloud1"></div>
+                <div class="cloud-item" style="left: 140%" data-type="cloud2"></div>
+                <div class="cloud-item" style="left: 160%" data-type="cloud3"></div>
+            </div>
+            
+            <!-- 波浪动画 -->
+            <div class="waves">
+                <div class="wave wave1"></div>
+                <div class="wave wave2"></div>
+            </div>
+            
+            <!-- 底部装饰元素 -->
+            <div class="bottom-elements">
+                <div class="snake-coin left"></div>
+                <div class="signature">祝您新年快乐</div>
+                <div class="snake-coin right"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 在 body 标签的开始处添加音乐播放器 -->
+    <video id="bgMusic" loop style="display: none;">
+        <source src="./music/background.mp4" type="video/mp4">
+    </video>
+
+    <!-- 添加音乐控制按钮 -->
+    <div class="music-control">
+        <button id="musicToggle" class="music-btn">
+            <span class="music-icon">🎵</span>
+        </button>
+    </div>
+
+    <!-- 添加初始交互提示层 -->
+    <div class="start-screen">
+        <div class="start-content">
+            <h2>点击任意处开始</h2>
+            <p>体验新年祝福</p>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>
