@@ -395,7 +395,7 @@ html {
     position: absolute;
     width: 40px;
     height: 50px;
-    background: url('./images/red-packet.png') no-repeat center/contain;
+    background: url('/your-repo-name/images/red-packet.png') no-repeat center/contain;
     animation: falling 4s linear infinite;
 }
 
@@ -407,7 +407,7 @@ html {
     position: absolute;
     width: 30px;
     height: 30px;
-    background: url('./images/gold-coin.png') no-repeat center/contain;
+    background: url('/your-repo-name/images/gold-coin.png') no-repeat center/contain;
     animation: spinning 4s linear infinite;
 }
 
@@ -422,7 +422,7 @@ html {
     position: absolute;
     width: 70px;
     height: 105px;
-    background: url('./images/lantern.png') no-repeat center/contain;
+    background: url('/your-repo-name/images/lantern.png') no-repeat center/contain;
     filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.5));
     transform-origin: top center;
 }
@@ -546,7 +546,7 @@ html {
 .chinese-knot {
     width: 80px;
     height: 100px;
-    background: url('./images/fu.png') no-repeat center/contain;
+    background: url('/your-repo-name/images/fu.png') no-repeat center/contain;
     position: relative;
     animation: floatKnot 3s ease-in-out infinite;
     filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
@@ -742,15 +742,15 @@ html {
 
 /* 为不同类型的云朵设置不同的图片 */
 .cloud-item[data-type="cloud1"] {
-    background: url('./images/cloud.png') no-repeat center/contain;
+    background: url('/your-repo-name/images/cloud.png') no-repeat center/contain;
 }
 
 .cloud-item[data-type="cloud2"] {
-    background: url('./images/cloud2.png') no-repeat center/contain;
+    background: url('/your-repo-name/images/cloud2.png') no-repeat center/contain;
 }
 
 .cloud-item[data-type="cloud3"] {
-    background: url('./images/cloud3.png') no-repeat center/contain;
+    background: url('/your-repo-name/images/cloud3.png') no-repeat center/contain;
 }
 
 /* 为每个云朵设置不同的起始位置和动画延迟 */
@@ -921,14 +921,14 @@ html {
 
 .boy-icon {
     right: -100px;
-    background: url('./images/boy.png') no-repeat center/contain;
+    background: url('/your-repo-name/images/boy.png') no-repeat center/contain;
     transform: scale(0.8);
     animation: boyFloat 3s ease-in-out infinite;
 }
 
 .snake-icon {
     left: -100px;
-    background: url('./images/snake2.png') no-repeat center/contain;
+    background: url('/your-repo-name/images/snake2.png') no-repeat center/contain;
     transform: scale(0.8) scaleX(-1);
     animation: snakeWiggle 4s ease-in-out infinite;
 }
