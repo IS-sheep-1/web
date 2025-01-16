@@ -64,33 +64,55 @@ document.addEventListener('DOMContentLoaded', () => {
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
 
-        // 设置初始状态
-        if (bgMusic.paused) {
-            musicToggle.classList.add('paused');
-        }
+        // 设置初始音量
+        bgMusic.volume = 0.7;
+
+        // 添加多个事件监听来触发音频播放
+        const playAudio = () => {
+            bgMusic.play().then(() => {
+                musicToggle.classList.remove('paused');
+            }).catch(error => {
+                console.log('播放失败:', error);
+                musicToggle.classList.add('paused');
+            });
+        };
+
+        // 监听各种用户交互事件
+        const events = ['touchstart', 'click', 'touchend'];
+        events.forEach(event => {
+            document.addEventListener(event, function startAudio() {
+                playAudio();
+                events.forEach(e => document.removeEventListener(e, startAudio));
+            }, { once: true });
+        });
 
         // 音乐控制按钮点击事件
         musicToggle.addEventListener('click', function(e) {
             e.stopPropagation();
             if (bgMusic.paused) {
-                bgMusic.volume = 1.0;
-                bgMusic.play().then(() => {
-                    musicToggle.classList.remove('paused');
-                }).catch(error => {
-                    console.log('播放失败:', error);
-                    musicToggle.classList.add('paused');
-                });
+                playAudio();
             } else {
                 bgMusic.pause();
                 musicToggle.classList.add('paused');
             }
         });
 
-        // 添加音频加载错误处理
-        bgMusic.addEventListener('error', (e) => {
-            console.error('音频加载错误:', e);
-            musicToggle.classList.add('paused');
+        // 自动播放失败时显示提示
+        bgMusic.addEventListener('error', () => {
+            showPlayTip();
         });
+    }
+
+    // 添加播放提示
+    function showPlayTip() {
+        const tip = document.createElement('div');
+        tip.className = 'play-tip';
+        tip.textContent = '点击任意处播放音乐';
+        document.body.appendChild(tip);
+        
+        setTimeout(() => {
+            tip.remove();
+        }, 3000);
     }
 
     // 初始化音频
